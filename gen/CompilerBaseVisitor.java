@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from C:/Users/DIEGOPC/Downloads/PracticaPL/src\Compiler.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -171,7 +171,7 @@ public class CompilerBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitReturn(CompilerParser.ReturnContext ctx) { return visitChildren(ctx); }
+	@Override public T visitReturn_m(CompilerParser.Return_mContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

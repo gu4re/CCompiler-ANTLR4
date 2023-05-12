@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from C:/Users/DIEGOPC/Downloads/PracticaPL/src\Compiler.g4 by ANTLR 4.12.0
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -280,13 +280,13 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterReturn(CompilerParser.ReturnContext ctx) { }
+	@Override public void enterReturn_m(CompilerParser.Return_mContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitReturn(CompilerParser.ReturnContext ctx) { }
+	@Override public void exitReturn_m(CompilerParser.Return_mContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

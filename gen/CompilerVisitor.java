@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from C:/Users/DIEGOPC/Downloads/PracticaPL/src\Compiler.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -142,11 +142,11 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSent(CompilerParser.SentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CompilerParser#return}.
+	 * Visit a parse tree produced by {@link CompilerParser#return_m}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitReturn(CompilerParser.ReturnContext ctx);
+	T visitReturn_m(CompilerParser.Return_mContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#asig}.
 	 * @param ctx the parse tree

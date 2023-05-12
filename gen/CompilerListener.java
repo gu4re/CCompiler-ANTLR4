@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from C:/Users/DIEGOPC/Downloads/PracticaPL/src\Compiler.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -227,15 +227,15 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitSent(CompilerParser.SentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CompilerParser#return}.
+	 * Enter a parse tree produced by {@link CompilerParser#return_m}.
 	 * @param ctx the parse tree
 	 */
-	void enterReturn(CompilerParser.ReturnContext ctx);
+	void enterReturn_m(CompilerParser.Return_mContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CompilerParser#return}.
+	 * Exit a parse tree produced by {@link CompilerParser#return_m}.
 	 * @param ctx the parse tree
 	 */
-	void exitReturn(CompilerParser.ReturnContext ctx);
+	void exitReturn_m(CompilerParser.Return_mContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#asig}.
 	 * @param ctx the parse tree
