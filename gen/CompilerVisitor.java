@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Library/CloudStorage/OneDrive-UniversidadReyJuanCarlos/3ºETSII/SegundoCuatrimestre/ProcesadoresLenguajes/PracticaObligatoria/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -22,17 +22,23 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDcllist(CompilerParser.DcllistContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#dcllist_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDcllist_R(CompilerParser.Dcllist_RContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#dcl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDcl(CompilerParser.DclContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CompilerParser#ctelist}.
+	 * Visit a parse tree produced by {@link CompilerParser#ctedef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCtelist(CompilerParser.CtelistContext ctx);
+	T visitCtedef(CompilerParser.CtedefContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#simpvalue}.
 	 * @param ctx the parse tree
@@ -70,6 +76,12 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunlist(CompilerParser.FunlistContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#funlist_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunlist_R(CompilerParser.Funlist_RContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#funcdef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -94,6 +106,12 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTypedef2(CompilerParser.Typedef2Context ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#typedef2_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypedef2_R(CompilerParser.Typedef2_RContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#sentlist}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -112,11 +130,23 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCode(CompilerParser.CodeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#code_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCode_R(CompilerParser.Code_RContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#sent}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSent(CompilerParser.SentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturn(CompilerParser.ReturnContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#asig}.
 	 * @param ctx the parse tree
@@ -129,6 +159,12 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExp(CompilerParser.ExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#exp_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExp_R(CompilerParser.Exp_RContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#op}.
 	 * @param ctx the parse tree

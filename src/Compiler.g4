@@ -36,10 +36,11 @@ program :
     dcllist J* funlist J* sentlist <EOF> ;
 
 /********* Declaration Zone *********/
-dcllist : dcl J* dcllist | ;
-dcl : ctelist | varlist ;
-ctelist : '#define' (SPACE)CONST_DEF_IDENTIFIER(SPACE) simpvalue J
-    | '#define' (SPACE)CONST_DEF_IDENTIFIER(SPACE) simpvalue ctelist ;
+dcllist : dcllist_R ;
+// Changed recursion
+dcllist_R : dcl J* dcllist_R | ;
+dcl : ctedef | vardef ';' ;
+ctedef : '#define' (SPACE)CONST_DEF_IDENTIFIER(SPACE) simpvalue J ;
 simpvalue : NUMERIC_INTEGER_CONST | NUMERIC_REAL_CONST
     | STRING_CONST ;
 varlist : vardef ';' | vardef ';' varlist ;
@@ -47,21 +48,28 @@ vardef : tbas (SPACE)IDENTIFIER | tbas (SPACE)IDENTIFIER (SPACE)?'='(SPACE)? sim
 tbas : 'integer' | 'float' | 'string' | tvoid ;
 tvoid : 'void' ;
 /********* Functions Zone *********/
-funlist : funcdef J* funlist | ;
+funlist : funlist_R ;
+funlist_R : funcdef J* funlist_R | ;
 funcdef : funchead '{' (J | SPACE)* code (J | SPACE)* '}' ;
 funchead : tbas (SPACE)IDENTIFIER(SPACE)? '(' typedef1 ')' ;
 // Added rule to allow "funcheader(void)" if you don't have args
 typedef1: typedef2 | ;
-typedef2 : tbas (SPACE)IDENTIFIER | tbas (SPACE)IDENTIFIER(SPACE)?','(SPACE)? typedef2
- | tvoid ((SPACE)IDENTIFIER)? ;
+// Changed recursion
+typedef2 : tbas (SPACE)IDENTIFIER(SPACE)? typedef2_R | tvoid ((SPACE)IDENTIFIER)? ;
+typedef2_R : ','(SPACE)? tbas (SPACE)IDENTIFIER(SPACE)? typedef2_R | ;
 /********* Sentences Zone *********/
 sentlist : mainhead '{' (J | SPACE)* code (J | SPACE)* '}' ;
 // Allowed 'Main' and 'main'
 mainhead : tvoid (SPACE)('main' | 'Main')(SPACE)? '(' typedef1 ')' ;
-code : sent (J | SPACE)* code | ;
-sent : asig ';' | funccall ';' | vardef ';';
+// Changed recursion
+code : code_R ;
+code_R : sent (J | SPACE)* code_R | ;
+sent : asig ';' | funccall ';' | vardef ';' | return ';' ;
+return : 'return' exp ;
 asig : IDENTIFIER (SPACE)'='(SPACE) exp ;
-exp : factor (SPACE)?(op(SPACE)? exp)? ;
+// Changed recursion
+exp : factor (SPACE)?exp_R ;
+exp_R : op(SPACE)? exp exp_R | ;
 op : '+' | '-' | '*' | 'DIV' | 'MOD' ;
 factor : simpvalue | '(' exp ')' | funccall ;
 funccall : IDENTIFIER subparamlist | CONST_DEF_IDENTIFIER subparamlist ;

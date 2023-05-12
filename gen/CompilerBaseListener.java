@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Library/CloudStorage/OneDrive-UniversidadReyJuanCarlos/3ºETSII/SegundoCuatrimestre/ProcesadoresLenguajes/PracticaObligatoria/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -40,6 +40,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDcllist_R(CompilerParser.Dcllist_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDcllist_R(CompilerParser.Dcllist_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDcl(CompilerParser.DclContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -52,13 +64,13 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCtelist(CompilerParser.CtelistContext ctx) { }
+	@Override public void enterCtedef(CompilerParser.CtedefContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCtelist(CompilerParser.CtelistContext ctx) { }
+	@Override public void exitCtedef(CompilerParser.CtedefContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,6 +148,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunlist_R(CompilerParser.Funlist_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunlist_R(CompilerParser.Funlist_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFuncdef(CompilerParser.FuncdefContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -184,6 +208,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTypedef2_R(CompilerParser.Typedef2_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypedef2_R(CompilerParser.Typedef2_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSentlist(CompilerParser.SentlistContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -220,6 +256,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCode_R(CompilerParser.Code_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCode_R(CompilerParser.Code_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSent(CompilerParser.SentContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -227,6 +275,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSent(CompilerParser.SentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReturn(CompilerParser.ReturnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReturn(CompilerParser.ReturnContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -251,6 +311,18 @@ public class CompilerBaseListener implements CompilerListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExp(CompilerParser.ExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExp_R(CompilerParser.Exp_RContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExp_R(CompilerParser.Exp_RContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

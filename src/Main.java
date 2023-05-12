@@ -15,6 +15,7 @@ public class Main {
             System.err.println("IO " + e.getMessage());
         } catch (java.lang.RuntimeException e) {
             System.err.println("RUN " + e.getMessage());
+            e.printStackTrace();
         }
         // print-testing
         System.out.println("Input compiles successfully with this grammar!");

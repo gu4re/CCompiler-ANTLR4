@@ -1,4 +1,4 @@
-// Generated from /Users/diegopicazo/Library/CloudStorage/OneDrive-UniversidadReyJuanCarlos/3ºETSII/SegundoCuatrimestre/ProcesadoresLenguajes/PracticaObligatoria/src/Compiler.g4 by ANTLR 4.12.0
+// Generated from /Users/diegopicazo/Documents/github/PracticaPL/src/Compiler.g4 by ANTLR 4.12.0
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -27,6 +27,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitDcllist(CompilerParser.DcllistContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#dcllist_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterDcllist_R(CompilerParser.Dcllist_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#dcllist_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitDcllist_R(CompilerParser.Dcllist_RContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#dcl}.
 	 * @param ctx the parse tree
 	 */
@@ -37,15 +47,15 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitDcl(CompilerParser.DclContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CompilerParser#ctelist}.
+	 * Enter a parse tree produced by {@link CompilerParser#ctedef}.
 	 * @param ctx the parse tree
 	 */
-	void enterCtelist(CompilerParser.CtelistContext ctx);
+	void enterCtedef(CompilerParser.CtedefContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CompilerParser#ctelist}.
+	 * Exit a parse tree produced by {@link CompilerParser#ctedef}.
 	 * @param ctx the parse tree
 	 */
-	void exitCtelist(CompilerParser.CtelistContext ctx);
+	void exitCtedef(CompilerParser.CtedefContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#simpvalue}.
 	 * @param ctx the parse tree
@@ -107,6 +117,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitFunlist(CompilerParser.FunlistContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#funlist_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunlist_R(CompilerParser.Funlist_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#funlist_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunlist_R(CompilerParser.Funlist_RContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#funcdef}.
 	 * @param ctx the parse tree
 	 */
@@ -147,6 +167,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitTypedef2(CompilerParser.Typedef2Context ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#typedef2_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypedef2_R(CompilerParser.Typedef2_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#typedef2_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypedef2_R(CompilerParser.Typedef2_RContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#sentlist}.
 	 * @param ctx the parse tree
 	 */
@@ -177,6 +207,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitCode(CompilerParser.CodeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#code_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterCode_R(CompilerParser.Code_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#code_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitCode_R(CompilerParser.Code_RContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#sent}.
 	 * @param ctx the parse tree
 	 */
@@ -186,6 +226,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSent(CompilerParser.SentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#return}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturn(CompilerParser.ReturnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#return}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturn(CompilerParser.ReturnContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#asig}.
 	 * @param ctx the parse tree
@@ -206,6 +256,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExp(CompilerParser.ExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#exp_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterExp_R(CompilerParser.Exp_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#exp_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitExp_R(CompilerParser.Exp_RContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#op}.
 	 * @param ctx the parse tree
