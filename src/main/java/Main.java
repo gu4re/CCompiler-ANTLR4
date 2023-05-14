@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIcon tickIcon = new ImageIcon("src/main/resources/tick-icon.png");
+        ImageIcon tickIcon = new ImageIcon(Main.class.getClassLoader().getResource("tick-icon.png"));
         File outputFile = null;
         try {
             /* As we already know ANTLR4 throws a RecognitionException and abort the execution of the syntax analyzer *
@@ -26,9 +26,8 @@ public class Main {
                     "Compiler initialized. \nDo you want to continue?", "Initializer",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION)
                 System.exit(0);
-            String inputFile = JOptionPane.showInputDialog(null,"Introduce the absolute path to your input file:",
-                    "Input File", JOptionPane.INFORMATION_MESSAGE);
-            //outputFile = (new File(inputFile)).; Hay que poner que la ruta de salida sea en el mismo sitio donde esta input
+            String inputFile = JOptionPane.showInputDialog(null,"Introduce the absolute path to " +
+                            "your input file:", "Input File", JOptionPane.INFORMATION_MESSAGE);
             CharStream input = CharStreams.fromFileName(inputFile);
             CompilerLexer analex = new CompilerLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(analex);

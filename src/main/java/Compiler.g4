@@ -2,6 +2,7 @@ grammar Compiler;
 
 @parser::header{
     import java.io.*;
+    import java.nio.file.Paths;
 }
 
 @parser::members{
@@ -19,6 +20,7 @@ grammar Compiler;
 J: '\n';
 SPACE: ' ';
 // TAB for us is equivalent to four SPACE
+TAB: '\t' -> skip;
 
 /********* Identifiers *********/
 CONST_DEF_IDENTIFIER:   ([_][A-Z_0-9[\]]+ | [A-Z][A-Z_0-9[\]]*);
@@ -36,21 +38,25 @@ fragment MIX:           (STATIC | INIT)[eE][+-]?[0-9]+;
 NUMERIC_REAL_CONST: [+-]?(STATIC | INIT | POW | MIX); // El '+' habria que probar a ver si es necesario
 
 /********* Strings *********/
-fragment STRING_DOUBLE: '"'([A-Za-z0-9'"\\%._]+ | SPACE)*'"';
-fragment STRING_SIMPLE: '\''([A-Za-z0-9\\'"._]+ | SPACE)*'\'';
+//fragment STRING_DOUBLE: '"'([A-Za-z0-9'"\\%._]+ | SPACE)*'"';
+fragment STRING_DOUBLE:  '"' ( ~["] | '\\"' | SPACE)* '"';
+fragment STRING_SIMPLE: '\''(~['] | '\'' | SPACE)* '\'';
+//fragment STRING_SIMPLE: '\''([A-Za-z0-9\\'"._]+ | SPACE)*'\'';
 
 STRING_CONST:   (STRING_DOUBLE | STRING_SIMPLE){getText().replaceAll("\\\\", "");};
 
 /********* Comments *********/
-fragment ONE_LINE:      '//'([A-Za-z0-9'"\\*] | SPACE)*J;
-fragment MORE_LINE:     '/*'([A-Za-z0-9'"\\*] | J | SPACE | ~[(*/)])+'*/';
+fragment ONE_LINE:      '//'(.*? | SPACE*) J;
+fragment MORE_LINE:     '/*'(J | SPACE | ('*'~[/]) | .+?)+'*/' J*;
 
-COMMENTS:   (ONE_LINE | MORE_LINE)+;
+COMMENTS:   (ONE_LINE | MORE_LINE)+ -> skip;
 
 /********* Main program *********/
 program:
    {
     final String STDIN_NAME = (new File(args)).getName().replaceFirst("[.][^.]+$", "");
+    final String FILE_SEP = System.getProperty("file.separator");
+    final String PATH_VARIABLE = Paths.get(args).getParent().toString() + FILE_SEP;
     sb.append("<!DOCTYPE html><html><head><title>").append(STDIN_NAME).append("</title>" +
         "<style>.cte{color:rgb(107, 211, 26);} .palres{color:rgb(0, 0, 0); font-weight: bold;}" +
         ".ident{color:rgb(77, 77, 255);} .idfunc{color:rgb(26, 26, 255); text-decoration: underline;}</style>" +
@@ -63,7 +69,7 @@ program:
         + " <a href=\"#inicio\">Inicio del programa</a>" + "</a><hr/></body></html>");
         PrintWriter fich = null;
         try{
-            final String STDOUT_NAME = "src/main/resources/export/" + STDIN_NAME + ".html";
+            final String STDOUT_NAME = PATH_VARIABLE + STDIN_NAME + ".html";
             fich = new PrintWriter(new BufferedWriter(new FileWriter(STDOUT_NAME)));
             fich.print(sb.toString());
         }
@@ -158,15 +164,17 @@ sent returns [String v] : asig ';' {$v = $asig.v + ";";}
     | dowhile_ {$v = $dowhile_.v;}
     | for_ {$v = $for_.v;} ;
 // Renamed rules adding a '_' because we can't use java keywords or Parser would not compile
-if_ returns [String v] : 'if'(SPACE)? expcond '{' (J | SPACE)* code (J | SPACE)* '}' else_["if" + $expcond.v + "{<br>"
-    + $code.v + "}"] {$v = $else_.v;} ;
-else_[String h] returns [String v] : 'else' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = $h + "else" + "{<br>"
-    + $code.v + "}";}
+if_ returns [String v] : 'if'(SPACE)? expcond '{' (J | SPACE)* code (J | SPACE)* '}'(J | SPACE)* else_["if" +
+    $expcond.v + "{<br>" + $code.v + "}" + ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? ""
+    : "<br>")] {$v = $else_.v;} ;
+else_[String h] returns [String v] : 'else'(J | SPACE)* '{' (J | SPACE)* code (J | SPACE)* '}' {$v = $h + "else" +
+    ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? "": "<br>") + "{<br>" + $code.v + "}";}
     | 'else' if_ {$v = $h + "else" + $if_.v;} | {$v = $h;};
 while_ returns [String v] : 'while' '(' expcond ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "while" + "("
     + $expcond.v + ")" + "{<br>" + $code.v + "}";};
-dowhile_ returns [String v] : 'do' '{' (J | SPACE)* code (J | SPACE)* '}' 'while' '(' expcond ')' ';' {$v = "do" +
-    "{<br>" + $code.v + "}" + "while" + "(" + $expcond.v + ")" + ";";};
+dowhile_ returns [String v] : 'do' '{' (J | SPACE)* code (J | SPACE)* '}' (J | SPACE)* 'while' '(' expcond ')' ';'
+    {$v = "do" + "{<br>" + $code.v + "}" + ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? "": "<br>")
+    + "while" + "(" + $expcond.v + ")" + ";";};
 for_ returns [String v] : 'for' '(' vardef ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "for"
     + "(" + $vardef.v + ";" + $expcond.v + ";" + $asig.v + ")" + "{<br>" + $code.v + "}";}
     | 'for' '(' asig ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "for" + "(" + $asig.v + ";"
