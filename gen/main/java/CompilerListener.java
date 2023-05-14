@@ -98,6 +98,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitTbas(CompilerParser.TbasContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 */
+	void enterStruct(CompilerParser.StructContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 */
+	void exitStruct(CompilerParser.StructContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#tvoid}.
 	 * @param ctx the parse tree
 	 */
@@ -227,6 +237,106 @@ public interface CompilerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSent(CompilerParser.SentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#if_}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf_(CompilerParser.If_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#if_}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf_(CompilerParser.If_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#else_}.
+	 * @param ctx the parse tree
+	 */
+	void enterElse_(CompilerParser.Else_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#else_}.
+	 * @param ctx the parse tree
+	 */
+	void exitElse_(CompilerParser.Else_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#while_}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhile_(CompilerParser.While_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#while_}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhile_(CompilerParser.While_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#dowhile_}.
+	 * @param ctx the parse tree
+	 */
+	void enterDowhile_(CompilerParser.Dowhile_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#dowhile_}.
+	 * @param ctx the parse tree
+	 */
+	void exitDowhile_(CompilerParser.Dowhile_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#for_}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor_(CompilerParser.For_Context ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#for_}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor_(CompilerParser.For_Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#expcond}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpcond(CompilerParser.ExpcondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#expcond}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpcond(CompilerParser.ExpcondContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#expcond_R}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpcond_R(CompilerParser.Expcond_RContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#expcond_R}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpcond_R(CompilerParser.Expcond_RContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#oplog}.
+	 * @param ctx the parse tree
+	 */
+	void enterOplog(CompilerParser.OplogContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#oplog}.
+	 * @param ctx the parse tree
+	 */
+	void exitOplog(CompilerParser.OplogContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#factorcond}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactorcond(CompilerParser.FactorcondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#factorcond}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactorcond(CompilerParser.FactorcondContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CompilerParser#opcomp}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpcomp(CompilerParser.OpcompContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#opcomp}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpcomp(CompilerParser.OpcompContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#return_m}.
 	 * @param ctx the parse tree

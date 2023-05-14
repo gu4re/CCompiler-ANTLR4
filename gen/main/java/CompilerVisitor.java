@@ -65,6 +65,12 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTbas(CompilerParser.TbasContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStruct(CompilerParser.StructContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#tvoid}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -142,6 +148,66 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSent(CompilerParser.SentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#if_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf_(CompilerParser.If_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#else_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElse_(CompilerParser.Else_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#while_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_(CompilerParser.While_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#dowhile_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDowhile_(CompilerParser.Dowhile_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#for_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFor_(CompilerParser.For_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#expcond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpcond(CompilerParser.ExpcondContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#expcond_R}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpcond_R(CompilerParser.Expcond_RContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#oplog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOplog(CompilerParser.OplogContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#factorcond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFactorcond(CompilerParser.FactorcondContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CompilerParser#opcomp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOpcomp(CompilerParser.OpcompContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#return_m}.
 	 * @param ctx the parse tree
