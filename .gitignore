@@ -1,5 +1,8 @@
 # Compiled class file
 *.class
+*.tmp
+
+.idea/
 
 # Log file
 *.log

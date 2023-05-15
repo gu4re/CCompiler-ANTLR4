@@ -6,11 +6,11 @@ grammar Compiler;
 }
 
 @parser::members{
-    StringBuilder sb = new StringBuilder();
-    String args = "";
-    boolean funlist_finished = false;
-    boolean funccall_main = false;
-    boolean funclist_color = false;
+    private StringBuilder sb = new StringBuilder();
+    private String args = "";
+    private boolean funlist_finished = false;
+    private boolean funccall_main = false;
+    private boolean funclist_color = false;
     public void setArgs(String args){
         this.args = args;
     }
@@ -21,6 +21,7 @@ J: '\n';
 SPACE: ' ';
 // TAB for us is equivalent to four SPACE
 TAB: '\t' -> skip;
+CR: '\r' -> skip;
 
 /********* Identifiers *********/
 CONST_DEF_IDENTIFIER:   ([_][A-Z_0-9[\]]+ | [A-Z][A-Z_0-9[\]]*);
