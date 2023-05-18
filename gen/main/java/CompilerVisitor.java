@@ -47,6 +47,12 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSimpvalue(CompilerParser.SimpvalueContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStruct(CompilerParser.StructContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link CompilerParser#varlist}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -64,12 +70,6 @@ public interface CompilerVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTbas(CompilerParser.TbasContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link CompilerParser#struct}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStruct(CompilerParser.StructContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CompilerParser#tvoid}.
 	 * @param ctx the parse tree

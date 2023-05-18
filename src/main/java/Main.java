@@ -28,9 +28,11 @@ public class Main {
             tickIcon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader()
                     .getResource("tick-icon.png")));
             // Added some active waits to pre-establish a duration to the actions through JOptionPane
-            if (JOptionPane.showConfirmDialog(null,
+            int status;
+            if ((status = JOptionPane.showConfirmDialog(null,
                     "Compiler initialized. \nDo you want to continue?", "Initializer",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION)
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.NO_OPTION
+                    || status == JOptionPane.CLOSED_OPTION)
                 System.exit(0);
             String inputFile = JOptionPane.showInputDialog(null,"Introduce the absolute path " +
                             "to your input file:", "Input File", JOptionPane.INFORMATION_MESSAGE);
@@ -72,17 +74,19 @@ public class Main {
         // Case 4 -> There is a problem with the I/O file or syntax exception
         } catch (IOException | RecognitionException e) {
             JOptionPane.showMessageDialog(null,
-                    (e instanceof IOException ? "File not found: " + e.getMessage() : e.getStackTrace()),
+                    (e instanceof IOException ? "File not found: " + e.getMessage() : outputStream),
                     "Exception", JOptionPane.ERROR_MESSAGE);
             // Deleted the outputFile due to Exceptions countered and probably the content will not be stable
-            outputFile.delete();
+            if (outputFile != null)
+                outputFile.delete();
             System.exit(1);
         // Case 5 -> An unexpected error occurred
         } catch (Exception e){
             JOptionPane.showMessageDialog(null,
-                    e.getStackTrace(),
+                    outputStream,
                     "Exception", JOptionPane.ERROR_MESSAGE);
-            outputFile.delete();
+            if (outputFile != null)
+                outputFile.delete();
             System.exit(1);
         }
     }

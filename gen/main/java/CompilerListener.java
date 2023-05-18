@@ -68,6 +68,16 @@ public interface CompilerListener extends ParseTreeListener {
 	 */
 	void exitSimpvalue(CompilerParser.SimpvalueContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 */
+	void enterStruct(CompilerParser.StructContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CompilerParser#struct}.
+	 * @param ctx the parse tree
+	 */
+	void exitStruct(CompilerParser.StructContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link CompilerParser#varlist}.
 	 * @param ctx the parse tree
 	 */
@@ -97,16 +107,6 @@ public interface CompilerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTbas(CompilerParser.TbasContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CompilerParser#struct}.
-	 * @param ctx the parse tree
-	 */
-	void enterStruct(CompilerParser.StructContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CompilerParser#struct}.
-	 * @param ctx the parse tree
-	 */
-	void exitStruct(CompilerParser.StructContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CompilerParser#tvoid}.
 	 * @param ctx the parse tree

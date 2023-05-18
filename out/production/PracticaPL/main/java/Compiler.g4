@@ -8,6 +8,8 @@ grammar Compiler;
 @parser::members{
     private StringBuilder sb = new StringBuilder();
     private String args = "";
+    // This variable controls the identation of the code
+    private double ident_tab = 0.5;
     private boolean funlist_finished = false;
     private boolean funccall_main = false;
     private boolean funclist_color = false;
@@ -53,7 +55,8 @@ fragment MORE_LINE:     '/*'(J | SPACE | ('*'~[/]) | .+?)+'*/' J*;
 COMMENTS:   (ONE_LINE | MORE_LINE)+ -> skip;
 
 /********* Main program *********/
-program:
+/********* INFO: 'h' attribute is an inherited attribute and 'v' is a synthesized attribute both in all rules *********/
+program: // Axiom
    {
     final String STDIN_NAME = (new File(args)).getName().replaceFirst("[.][^.]+$", "");
     final String FILE_SEP = System.getProperty("file.separator");
@@ -63,27 +66,28 @@ program:
         ".ident{color:rgb(77, 77, 255);} .idfunc{color:rgb(26, 26, 255); text-decoration: underline;}</style>" +
         "</head>").append("<body><h1 id=\"inicio\">").append("Programa: ").append(STDIN_NAME).append("</h1>")
         .append("<h2>Funciones</h2>").append("<ul>");
-   } dcllist J* funlist {sb.append($funlist.v + "<hr/><a id=\"Main\"><h2>Programa Principal</h2>" + $dcllist.v
-    + "<br><br>");} J* sentlist <EOF>
-   {
-        sb.append($sentlist.v + "<br><a href=\"#Main\">Inicio del programa principal</a> "
-        + " <a href=\"#inicio\">Inicio del programa</a>" + "</a><hr/></body></html>");
-        PrintWriter fich = null;
-        try{
-            final String STDOUT_NAME = PATH_VARIABLE + STDIN_NAME + ".html";
-            fich = new PrintWriter(new BufferedWriter(new FileWriter(STDOUT_NAME)));
-            fich.print(sb.toString());
-        }
-        catch(IOException e){
-            System.err.println("Bad file creator.\n" + e.getMessage());
-            throw new RuntimeException();
-        }
-        finally{
-            if (fich != null)
-                fich.close();
-        }
-   };
-
+   } dcllist J* funlist {sb.append($funlist.v + ($funlist.v == "<li><a href=\"#Main\">Programa principal</a></li>"
+        ? "</ul>" : "") + "<hr/><a id=\"Main\"><h2>Programa Principal</h2>" + $dcllist.v + ($dcllist.v == "" ? "" :
+        "<br><br>"));} J* sentlist
+        <EOF>
+        {
+            sb.append($sentlist.v + "<br><a href=\"#Main\">Inicio del programa principal</a> "
+            + " <a href=\"#inicio\">Inicio del programa</a>" + "</a><hr/></body></html>");
+            PrintWriter fich = null;
+            try{
+                final String STDOUT_NAME = PATH_VARIABLE + STDIN_NAME + ".html";
+                fich = new PrintWriter(new BufferedWriter(new FileWriter(STDOUT_NAME)));
+                fich.print(sb.toString());
+            }
+            catch(IOException e){
+                System.err.println("Bad file creator.\n" + e.getMessage());
+                throw new RuntimeException();
+            }
+            finally{
+                if (fich != null)
+                    fich.close();
+            }
+        };
 /********* Declaration Zone *********/
 dcllist returns [String v]: dcllist_R[""] {$v = $dcllist_R.v;};
 // Changed recursion
@@ -98,7 +102,10 @@ simpvalue returns [String v] : NUMERIC_INTEGER_CONST {$v = "<span class=\"cte\">
     + "</span>";}
     | NUMERIC_REAL_CONST {$v = "<span class=\"cte\">" + $NUMERIC_REAL_CONST.text + "</span>";}
     | STRING_CONST {$v = "<span class=\"cte\">" + $STRING_CONST.text + "</span>";} ;
-varlist : vardef ';' | vardef ';' varlist ;
+struct returns [String v] : 'struct' '{'(J | SPACE)* varlist[""] (J | SPACE)*'}'(SPACE)? {$v = "<br>" +
+    "<span class=\"palres\">struct</span>{<div style=\"text-indent: 0.5cm\">" + $varlist.v + "</div>}";};
+varlist[String h] returns [String v] : vardef ';' {$v = $h + "<div>" + $vardef.v + ";" + "</div>";}
+    | vardef ';'(J | SPACE)* varlist[$h += "<div>" + $vardef.v + ";" + "</div>"] {$v = $varlist.v;};
 vardef returns [String v] : tbas (SPACE)IDENTIFIER {$v = $tbas.v + $SPACE.text + "<span class=\"ident\">"
         + $IDENTIFIER.text + "</span>";}
     | tbas (SPACE)IDENTIFIER (SPACE)?'='(SPACE)? simpvalue {$v = $tbas.v + $SPACE.text + "<span class=\"ident\">"
@@ -109,8 +116,7 @@ tbas returns [String v] : 'integer' {$v = (funclist_color ? "integer" : "<span c
     | 'float' {$v = (funclist_color ? "float" : "<span class=\"palres\">float</span>");}
     | 'string' {$v = (funclist_color ? "string" : "<span class=\"palres\">string</span>");}
     | tvoid {$v = $tvoid.v;}
-    | struct ;
-struct : 'struct' '{' varlist '}' ;
+    | struct {$v = $struct.v;};
 tvoid returns [String v] : 'void' {$v = (funclist_color ? "void" : "<span class=\"palres\">void</span>");} ;
 /********* Functions Zone *********/
 funlist returns [String v] : funlist_R["<li><a href=\"#Main\">Programa principal</a></li>"]
@@ -165,28 +171,33 @@ sent returns [String v] : asig ';' {$v = $asig.v + ";";}
     | dowhile_ {$v = $dowhile_.v;}
     | for_ {$v = $for_.v;} ;
 // Renamed rules adding a '_' because we can't use java keywords or Parser would not compile
-if_ returns [String v] : 'if'(SPACE)? expcond '{' (J | SPACE)* code (J | SPACE)* '}'(J | SPACE)* else_["if" +
-    $expcond.v + "{<br>" + $code.v + "}" + ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? ""
-    : "<br>")] {$v = $else_.v;} ;
-else_[String h] returns [String v] : 'else'(J | SPACE)* '{' (J | SPACE)* code (J | SPACE)* '}' {$v = $h + "else" +
-    ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? "": "<br>") + "{<br>" + $code.v + "}";}
-    | 'else' if_ {$v = $h + "else" + $if_.v;} | {$v = $h;};
-while_ returns [String v] : 'while' '(' expcond ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "while" + "("
-    + $expcond.v + ")" + "{<br>" + $code.v + "}";};
+if_ returns [String v] : 'if'(SPACE)? expcond '{'{ident_tab += 0.5;} (J | SPACE)* code (J | SPACE)* '}'
+    (J | SPACE)* else_["<span class=\"palres\">if</span>" + $expcond.v + "{<br>" +
+    "<div style=\"text-indent: \"" + String.valueOf(ident_tab) + "cm\">" + $code.v + "</div>" + "<div>}"
+    + ($SPACE.text == null ? "": $SPACE.text) + ($J.text == null ? "": "<br>")] {ident_tab -= 0.5;$v = $else_.v;} ;
+else_[String h] returns [String v] : 'else'(J | SPACE)* '{'{ident_tab += 0.5;} (J | SPACE)* code (J | SPACE)* '}'
+    {ident_tab -= 0.5;} {$v = $h + "<span class=\"palres\">else</span>" + ($SPACE.text == null ? "" : $SPACE.text)
+    + ($J.text == null ? "": "<br>") + "{</div>" + "<div style=\"text-indent: " + String.valueOf(ident_tab) + "cm\">"
+    + $code.v + "</div>" + "<div>}</div>";}
+    | 'else' if_ {$v = $h + "<span class=\"palres\">else</span>" + $if_.v;} | {$v = $h;};
+while_ returns [String v] : 'while' '(' expcond ')' '{' (J | SPACE)* code (J | SPACE)* '}'
+    {$v = "<span class=\"palres\">while</span>" + "(" + $expcond.v + ")" + "{<br>" + $code.v + "}";};
 dowhile_ returns [String v] : 'do' '{' (J | SPACE)* code (J | SPACE)* '}' (J | SPACE)* 'while' '(' expcond ')' ';'
-    {$v = "do" + "{<br>" + $code.v + "}" + ($SPACE.text == null ? "" : $SPACE.text) + ($J.text == null ? "": "<br>")
-    + "while" + "(" + $expcond.v + ")" + ";";};
-for_ returns [String v] : 'for' '(' vardef ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "for"
-    + "(" + $vardef.v + ";" + $expcond.v + ";" + $asig.v + ")" + "{<br>" + $code.v + "}";}
-    | 'for' '(' asig ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}' {$v = "for" + "(" + $asig.v + ";"
-        + $expcond.v + ";" + $asig.v + ")" + "{<br>" + $code.v + "}"; } ;
+    {$v = "<span class=\"palres\">do</span>" + "{<br>" + $code.v + "}" + ($SPACE.text == null ? "" : $SPACE.text) +
+    ($J.text == null ? "": "<br>") + "<span class=\"palres\">while</span>" + "(" + $expcond.v + ")" + ";";};
+for_ returns [String v] : 'for' '(' vardef ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}'
+    {$v = "<span class=\"palres\">for</span>" + "(" + $vardef.v + ";" + $expcond.v + ";" + $asig.v + ")"
+    + "{<br>" + $code.v + "}";}
+    | 'for' '(' asig ';' expcond ';' asig ')' '{' (J | SPACE)* code (J | SPACE)* '}'
+    {$v = "<span class=\"palres\">for</span>" + "(" + $asig.v + ";" + $expcond.v + ";" + $asig.v + ")" + "{<br>"
+    + $code.v + "}"; } ;
 // Changed recursion
 expcond returns [String v] : factorcond[""] expcond_R[$factorcond.v] {$v = $expcond_R.v;};
 expcond_R[String h] returns [String v] : (SPACE)?oplog(SPACE)? expcond expcond_R[$h += ($SPACE.text == null ? "" :
     $SPACE.text) + $oplog.v + ($SPACE.text == null ? "" : $SPACE.text) + $expcond.v] {$v = $expcond_R.v;} | {$v = $h;};
 oplog returns [String v] : '||' {$v = "||";} | '&' {$v = "&";};
-factorcond[String h] returns [String v] : exp(SPACE)? opcomp(SPACE)? exp {$v = $exp.v + ($SPACE.text == null ? "" :
-    $SPACE.text) + $opcomp.v + ($SPACE.text == null ? "" : $SPACE.text) + $exp.v;}
+factorcond[String h] returns [String v] : exp(SPACE)? {$v = $exp.v;} opcomp(SPACE)? exp {$v += ($SPACE.text == null
+    ? "" : $SPACE.text) + $opcomp.v + ($SPACE.text == null ? "" : $SPACE.text) + $exp.v;}
     | '(' expcond ')' {$v = "(" + $expcond.v + ")";} | '!' factorcond["!"] {$v = $factorcond.v;};
 opcomp returns [String v] : '<' {$v = "<";} | '>' {$v = ">";} | '<=' {$v = "<=";} | '>=' {$v = ">=";}
     | '==' {$v = "==";} ;
