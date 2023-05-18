@@ -171,12 +171,12 @@ sent returns [String v] : asig ';' {$v = $asig.v + ";";}
     | dowhile_ {$v = $dowhile_.v;}
     | for_ {$v = $for_.v;} ;
 // Renamed rules adding a '_' because we can't use java keywords or Parser would not compile
-if_ returns [String v] : 'if'(SPACE)? expcond '{'{ident_tab += 0.5;} (J | SPACE)* code (J | SPACE)* '}'
-    (J | SPACE)* else_["<span class=\"palres\">if</span>" + $expcond.v + "{<br>" +
-    "<div style=\"text-indent: \"" + String.valueOf(ident_tab) + "cm\">" + $code.v + "</div>" + "<div>}"
-    + ($SPACE.text == null ? "": $SPACE.text) + ($J.text == null ? "": "<br>")] {ident_tab -= 0.5;$v = $else_.v;} ;
+if_ returns [String v] : 'if'(SPACE)? expcond '{' {ident_tab += 0.5;} (J | SPACE)* code (J | SPACE)* '}'
+    (J | SPACE)* {ident_tab -= 0.5;} else_["<span class=\"palres\">if</span>" + $expcond.v + "{<br>" +
+    "<div style=\"text-indent: " + String.valueOf(ident_tab) + "cm\">" + $code.v + "</div>" + "<div>}"
+    + ($SPACE.text == null ? "": $SPACE.text) + ($J.text == null ? "": "<br>")] {$v = $else_.v;} ;
 else_[String h] returns [String v] : 'else'(J | SPACE)* '{'{ident_tab += 0.5;} (J | SPACE)* code (J | SPACE)* '}'
-    {ident_tab -= 0.5;} {$v = $h + "<span class=\"palres\">else</span>" + ($SPACE.text == null ? "" : $SPACE.text)
+    {ident_tab -= 0.5; $v = $h + "<span class=\"palres\">else</span>" + ($SPACE.text == null ? "" : $SPACE.text)
     + ($J.text == null ? "": "<br>") + "{</div>" + "<div style=\"text-indent: " + String.valueOf(ident_tab) + "cm\">"
     + $code.v + "</div>" + "<div>}</div>";}
     | 'else' if_ {$v = $h + "<span class=\"palres\">else</span>" + $if_.v;} | {$v = $h;};
