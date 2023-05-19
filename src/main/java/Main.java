@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         File outputFile = null;
+        final int MAX_ERRORS = 300;
         ImageIcon tickIcon;
         try {
             /* As we already know ANTLR4 throws a RecognitionException and abort the execution of the syntax analyzer *
@@ -49,7 +50,7 @@ public class Main {
             anasint.program();
             if (!outputStream.toString().equals("")) {
                 // Case 1 -> Aborting compilation, too many errors occurred and EOF could not be reached
-                if (outputStream.toString().contains("<EOF>")) {
+                if (outputStream.toString().contains("<EOF>") || outputStream.toString().length() > MAX_ERRORS) {
                     JOptionPane.showMessageDialog(null,
                             "Compilation failed due to following errors:\n" + outputStream,
                             "Compilation Failed", JOptionPane.ERROR_MESSAGE);

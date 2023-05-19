@@ -13,13 +13,13 @@ struct{
     string codificar_cadena(string cadena, integer desplazamiento){
        string cadena2;
        cadena2 = (cadena + desplazamiento) * random(desplazamiento);
-       return(cadena2);
+       return(cadena2)
     }
 } hello;
 
 // Declaracion de funciones
 string codificar_cadena(string cadena, integer desplazamiento);
-void save(string nombre);
+void save(string nombre)
 
 // Funcion que codifica la cadena
 string codificar_cadena(string cadena, integer desplazamiento){
@@ -34,7 +34,7 @@ void save(string nombre){
 }
 
 // Funcion main principal
-void Main (){
+void Main ()
     string codificado;
     codificado = codificar_cadena(nombre, FECHA);
     save(codificado);
@@ -45,6 +45,6 @@ void Main (){
     }
     else { 
         printf("%s", "El numero de alumnos es menor de 10");
-    }
+    
     codificado = codificar_cadena(nombre, (CODIGO DIV codificado));
 }

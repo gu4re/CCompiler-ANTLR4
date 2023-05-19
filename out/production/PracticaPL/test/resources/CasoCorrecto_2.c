@@ -1,27 +1,47 @@
-#define FECHA 2023
-#define CODIGO 10
-integer n_alumnos;
-float __valor_real;
-string nombre = "alumno1";
-
-string codificar_cadena(string cadena, integer desplazamiento);
-void save(string nombre);
-
-string codificar_cadena(string cadena, integer desplazamiento){
-    string cadena2;
-    cadena2 = (cadena + desplazamiento) * random(desplazamiento);
-    return(cadena2);
-}
-
-void save(string nombre){
-    fopen("file.txt", "w");
-    printf(nombre);
-}
-
+// Funcion main principal
 void Main (){
-    string codificado;
-    codificado = codificar_cadena(nombre, FECHA);
-    save(codificado);
-    n_alumnos = n_alumnos + 1;
-    codificado = codificar_cadena(nombre, (CODIGO DIV codificado));
+    integer numero1 = 10;
+	integer numero2 = 20;
+    
+	// if-else anidados
+    if (numero1 > 0){
+        printf("El primer número es positivo.\n");
+    } else { 
+		if (numero2 > 0){
+			printf("El segundo número es positivo.\n");
+		} else {
+			printf("El segundo número es negativo.\n");
+		}
+    }
+	// while anidado
+    integer i = 1;
+	while(i <= 5){
+		printf("Iteración externa %d\n", i);
+		integer j = 1;
+		while(j <= 3){
+			printf("Iteración interna %d\n", j);
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	// do-while
+	integer contador = 0;
+	do{
+		printf("El contador es %d.\n", contador);
+		contador = contador + 1;
+	} while(contador <= 5);
+	
+	for (integer i = 0; i < 3; i = i + 1){
+		printf(i);
+	}
+	
+	if (contador > 10){
+		printf("El contador es grande");
+	} else if (contador < 10){
+		printf("El contador es pequeño");
+	} else {
+		printf("hola");
+	}
+
+	return(0);
 }
